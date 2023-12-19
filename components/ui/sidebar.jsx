@@ -30,7 +30,7 @@ const Sidebar = () => {
 
   return (
     <div className="z-20 flex flex-col">
-      <div className="z-20 flex items-center justify-between p-4 transition-none lg:mb-2 lg:rounded-lg bg-card h-14">
+      <div className="z-20 flex items-center justify-between w-full p-4 transition-none lg:mb-2 lg:rounded-lg bg-card h-14">
         <div className="font-extrabold text-foreground">
           <Link href="/">
             <span className="inline-flex gap-2 align-middle hover:text-[#1fdf64]">
@@ -59,7 +59,7 @@ const Sidebar = () => {
           />
         </section>
       </div>
-      <div className="relative z-10 flex flex-row space-x-2 grow lg:flex-col lg:space-x-0 lg:space-y-2">
+      <div className="relative z-10 flex flex-row space-x-2 lg:w-72 grow lg:flex-col lg:space-x-0 lg:space-y-2">
         <div
           className={clsx(
             "lg:static lg:h-[calc(100dvh-80px)] h-[calc(100dvh-56px)] lg:mt-0 origin-top absolute w-full lg:rounded-lg grow lg:block transition-all duration-300 ease-out bg-card lg:duration-0 lg:opacity-100",
