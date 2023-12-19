@@ -8,11 +8,14 @@ export const MenuContext = createContext();
 
 export const ContextProvider = ({ children }) => {
   const [token, setToken] = useState(null);
+  const [clientToken, setClientToken] = useState(null);
   const [songID, setSongID] = useState(null);
   const [menu, setMenu] = useState(false);
 
   return (
-    <TokenContext.Provider value={{ token, setToken }}>
+    <TokenContext.Provider
+      value={{ token, setToken, clientToken, setClientToken }}
+    >
       <SongContext.Provider value={{ songID, setSongID }}>
         <MenuContext.Provider value={{ menu, setMenu }}>
           {children}
