@@ -17,10 +17,6 @@ const Sidebar = () => {
 
   const { token, setToken } = useContext(TokenContext);
 
-  // useEffect(() => {
-  //   setToken("Token!");
-  // }, []);
-
   useEffect(() => {
     if (menu) {
       setShowMenu(true);
