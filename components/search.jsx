@@ -1,13 +1,18 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Input } from "./ui/input";
 import { useDebouncedCallback } from "use-debounce";
-import { searchTracks } from "@/lib/spotify";
+import {
+  searchTracks,
+  getClientAccessToken,
+  hasClientTokenExpired
+} from "@/lib/spotify";
 import { catchErrors } from "@/lib/utils";
 import SongItem from "@/components/ui/song-item";
 import { usePathname } from "next/navigation";
 import { Bars } from "react-loader-spinner";
 import { X } from "lucide-react";
 import clsx from "clsx";
+import { TokenContext } from "@/context/ContextProvider";
 
 const Search = ({ setShowMenu }) => {
   /**
@@ -18,6 +23,7 @@ const Search = ({ setShowMenu }) => {
   const [data, setData] = useState(null);
   const [status, setStatus] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const { clientToken, setClientToken } = useContext(TokenContext);
 
   const inputElement = useRef(null);
 
@@ -32,7 +38,20 @@ const Search = ({ setShowMenu }) => {
       // console.log(`Searching for ${term}...`);
 
       const fetchData = async () => {
-        const searchResults = await searchTracks(term);
+        let token = clientToken;
+        if (!token) {
+          console.log("No client token found. Getting client token...");
+          token = await getClientAccessToken();
+          console.log(token);
+          setClientToken(token);
+        } else if (hasClientTokenExpired(token)) {
+          console.log("Client token has expired. Getting new client token...");
+          token = await getClientAccessToken();
+          console.log(token);
+          setClientToken(token);
+        }
+
+        const searchResults = await searchTracks(term, token);
         setData(searchResults.data.tracks);
         setStatus(searchResults.status);
         // console.log("searchResults", searchResults);
