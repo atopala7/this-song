@@ -40,7 +40,6 @@ const Page = () => {
   const scrollHeight = useTransform(scrollY, [0, 200], [300, 100]);
 
   console.log("Rendering song/page.jsx");
-  console.log(token);
 
   useEffect(() => {
     console.log("song/page.jsx: useEffect(() => {...}, [])");

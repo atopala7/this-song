@@ -38,8 +38,6 @@ const UserProfile = () => {
 
   const searchParams = useSearchParams();
 
-  console.log("Search params access token: ", searchParams.has("access_token"));
-
   console.log("Rendering user-profile.jsx");
 
   useEffect(() => {
