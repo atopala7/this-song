@@ -3,7 +3,11 @@ import { useContext, useEffect, useRef, useState } from "react";
 
 import { SongContext, TokenContext } from "@/context/ContextProvider";
 
-import { getCurrentlyPlaying } from "@/lib/spotify";
+import {
+  getCurrentlyPlaying,
+  getAccessToken,
+  hasTokenExpired
+} from "@/lib/spotify";
 import { catchErrors } from "@/lib/utils";
 import { motion, useScroll, useTransform } from "framer-motion";
 import clsx from "clsx";
@@ -25,7 +29,7 @@ const Page = () => {
 
   const [scrolled, setScrolled] = useState(false);
 
-  const { token } = useContext(TokenContext);
+  const { token, setToken } = useContext(TokenContext);
   const { songID, setSongID } = useContext(SongContext);
   const [song, setSong] = useState(null);
 
@@ -38,51 +42,47 @@ const Page = () => {
   console.log("Rendering song/page.jsx");
 
   useEffect(() => {
+    console.log("song/page.jsx: useEffect(() => {...}, [])");
     // Awaits the song that's currently playing and sets state variables accordingly
-    const getSong = (select) => {
+    const getSong = () => {
       // Clear the previous state variables
       setData(null);
       setStatus(null);
       setScrolled(false);
 
-      setSongID(null);
-
       scrollTo(0, 0);
 
-      if (!select) {
-        const fetchData = async () => {
-          // console.log("Getting currently playing song...");
-          try {
-            const currentlyPlaying = await getCurrentlyPlaying();
-            setData(currentlyPlaying.data);
-            setStatus(currentlyPlaying.status);
-          } catch (error) {
-            console.log("Could not get currently playing song.");
-          }
-        };
-        catchErrors(fetchData());
-      } else if (select) {
-        // console.log(select);
-
-        const thisSong = {
-          id: select.id,
-          albumArt: select.albumArt,
-          songName: select.songName,
-          artists: select.artists,
-          albumName: select.albumName
-        };
-
-        // console.log("Song id: ", thisSong);
-        setSongID(thisSong.id);
-        setSong(thisSong);
-      }
+      const fetchData = async () => {
+        let accessToken = token;
+        if (!accessToken) {
+          console.log("No access token found. Getting access token...");
+          accessToken = getAccessToken();
+          console.log(accessToken);
+          setToken(accessToken);
+        } else if (hasTokenExpired(accessToken)) {
+          console.log("Access token has expired. Getting new access token...");
+          accessToken = getAccessToken();
+          console.log(accessToken);
+          setToken(accessToken);
+        }
+        // console.log("Getting currently playing song...");
+        try {
+          const currentlyPlaying = await getCurrentlyPlaying(accessToken);
+          setData(currentlyPlaying.data);
+          setStatus(currentlyPlaying.status);
+        } catch (error) {
+          console.log("Could not get currently playing song.");
+        }
+      };
+      catchErrors(fetchData());
     };
 
     setInit(1);
     getSong();
-  }, [setSongID]);
+  }, []);
 
   useEffect(() => {
+    console.log("song/page.jsx: useEffect(() => {...}, [data, setSongID])");
     if (data) {
       const thisSong = {
         id: data.item.id,

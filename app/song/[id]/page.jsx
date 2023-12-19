@@ -1,6 +1,10 @@
 "use client";
 import { SongContext, TokenContext } from "@/context/ContextProvider";
-import { getTrack } from "@/lib/spotify";
+import {
+  getClientAccessToken,
+  getTrack,
+  hasClientTokenExpired
+} from "@/lib/spotify";
 import { catchErrors } from "@/lib/utils";
 import { useScroll, useTransform, motion } from "framer-motion";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -21,6 +25,7 @@ const Page = ({ params }) => {
 
   const [scrolled, setScrolled] = useState(false);
   const { token } = useContext(TokenContext);
+  const { clientToken, setClientToken } = useContext(TokenContext);
   const { songID, setSongID } = useContext(SongContext);
 
   const ref = useRef(null);
@@ -32,7 +37,12 @@ const Page = ({ params }) => {
   const id = params.id;
   const pathname = usePathname();
 
+  console.log("Rendering song/[id]/page.jsx");
+
+  console.log("Client token:", clientToken);
+
   useEffect(() => {
+    console.log("song/[id]/page.jsx: useEffect(() => {...}, [id, setSongID]");
     // Clear the previous state variables
     // setData(null);
     setStatus(null);
@@ -41,8 +51,21 @@ const Page = ({ params }) => {
     setSongID(null);
 
     const fetchData = async () => {
+      let token = clientToken;
+      if (!token) {
+        console.log("No client token found. Getting client token...");
+        token = await getClientAccessToken();
+        console.log(token);
+        setClientToken(token);
+      } else if (hasClientTokenExpired(token)) {
+        console.log("Client token has expired. Getting new client token...");
+        token = await getClientAccessToken();
+        console.log(token);
+        setClientToken(token);
+      }
+
       // console.log("Getting song...");
-      const data = await getTrack(id);
+      const data = await getTrack(id, token);
       // console.log("data", data);
 
       if (data.status == 200) {
@@ -69,6 +92,7 @@ const Page = ({ params }) => {
 
   // Run this hook when the songID changes; by that point, the DOM will be ready so the ref will be defined
   useEffect(() => {
+    console.log("song/[id]/page.jsx: useEffect(() => {...}, [songID]");
     // Toggle the scrolled state variable when the scroll target is intersected
     const observer = new IntersectionObserver(
       (entries) => {

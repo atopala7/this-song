@@ -1,10 +1,15 @@
-import { React, useState, useEffect } from "react";
-import { getRecentlyPlayed } from "@/lib/spotify";
+import { React, useState, useEffect, useContext } from "react";
+import {
+  getAccessToken,
+  getRecentlyPlayed,
+  hasTokenExpired
+} from "@/lib/spotify";
 import { catchErrors } from "@/lib/utils";
 
 import SongItem from "@/components/ui/song-item";
 import { usePathname } from "next/navigation";
 import { Skeleton } from "./ui/skeleton";
+import { TokenContext } from "@/context/ContextProvider";
 
 const Recent = ({ setShowMenu }) => {
   /**
@@ -14,6 +19,8 @@ const Recent = ({ setShowMenu }) => {
    */
   const [data, setData] = useState(null);
   const [status, setStatus] = useState(null);
+
+  const { token, setToken } = useContext(TokenContext);
 
   const pathname = usePathname();
 
@@ -29,7 +36,19 @@ const Recent = ({ setShowMenu }) => {
 
     // console.log("Getting recent songs...");
     const fetchData = async () => {
-      const recentSongs = await getRecentlyPlayed();
+      let accessToken = token;
+      if (!accessToken) {
+        console.log("No access token found. Getting access token...");
+        accessToken = getAccessToken();
+        console.log(accessToken);
+        setToken(accessToken);
+      } else if (hasTokenExpired(accessToken)) {
+        console.log("Access token has expired. Getting new access token...");
+        accessToken = getAccessToken();
+        console.log(accessToken);
+        setToken(accessToken);
+      }
+      const recentSongs = await getRecentlyPlayed(accessToken);
       // console.log("recentSongs", recentSongs);
       setData(recentSongs.data);
       setStatus(recentSongs.status);
