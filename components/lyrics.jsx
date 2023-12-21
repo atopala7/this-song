@@ -32,13 +32,16 @@ const Lyrics = ({ songName, artistName, albumName }) => {
     setStatus(null);
     setGPTInterpretation(null);
 
+    console.log("Fetching lyrics for " + songName + "...");
+
     const fetchData = async () => {
+      console.log("Fetching data (lyrics)...");
       const songLyricsResponse = await getLyrics(
         songName,
         artistName,
         albumName
       );
-      // console.log(songLyricsResponse);
+      console.log(songLyricsResponse);
       const statusCode =
         songLyricsResponse.data.message?.header?.status_code ||
         songLyricsResponse.status;
