@@ -17,6 +17,7 @@ import {
   checkToken,
   getAccessToken,
   getCurrentUserProfile,
+  hasTokenExpired,
   logout
 } from "@/lib/spotify";
 import { catchErrors } from "@/lib/utils";
@@ -40,19 +41,33 @@ const UserProfile = () => {
   console.log("Rendering user-profile.jsx");
 
   useEffect(() => {
+    console.log("user-profile.jsx: useEffect(() => {...}, [setToken])");
     const getToken = () => {
-      const accessToken = getAccessToken();
-      setToken(accessToken);
+      let accessToken = token;
+      if (!accessToken) {
+        console.log("No access token found. Getting access token...");
+        accessToken = getAccessToken();
+        console.log(accessToken);
+        setToken(accessToken);
+      } else if (hasTokenExpired(accessToken)) {
+        console.log("Access token has expired. Getting new access token...");
+        accessToken = getAccessToken();
+        console.log(accessToken);
+        setToken(accessToken);
+      }
     };
     catchErrors(getToken());
   }, [setToken]);
 
   useEffect(() => {
+    console.log(
+      "user-profile.jsx: useEffect(() => {...}, [token, pathname, replace, searchParams])"
+    );
     const fetchData = async () => {
       if (token) {
-        // console.log("Getting user profile...");
+        console.log("Getting user profile...");
         try {
-          const res = await getCurrentUserProfile();
+          const res = await getCurrentUserProfile(token);
           if (res.status === 200) {
             const profile = {
               id: res.data.id,
@@ -109,7 +124,7 @@ const UserProfile = () => {
         </DropdownMenuContent>
       </DropdownMenu>
     );
-  } else if (token) {
+  } else if (token || (searchParams && searchParams.has("access_token"))) {
     return (
       <div className="flex items-center justify-center w-full gap-2 p-1 rounded-sm bg-primary">
         <Skeleton className="w-10 h-10 rounded-full" />
@@ -117,6 +132,7 @@ const UserProfile = () => {
       </div>
     );
   } else {
+    console.log("User is not logged in.");
     const LOGIN_URI =
       process.env.NEXT_PUBLIC_VERCEL_ENV == "development"
         ? "http://192.168.4.158:8000/login"
