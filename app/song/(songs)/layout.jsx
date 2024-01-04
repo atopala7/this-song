@@ -44,6 +44,55 @@ export default function SongLayout({ children }) {
   useEffect(() => {
     console.log("Updating session...");
     if (session) update();
+    let footer = document.getElementsByTagName("footer")[0];
+    console.log(footer);
+    let menu = document.getElementById("menu");
+    let resizeMenu = () => {
+      if (menu) {
+        const scrollDistanceWithinFooter = Math.abs(
+          document.body.scrollHeight -
+            window.innerHeight -
+            window.scrollY -
+            footer.offsetHeight
+        );
+
+        console.log(scrollDistanceWithinFooter);
+        console.log(menu.style);
+        if (window.innerWidth >= 1024) {
+          console.log("sticky!");
+          menu.style.height = `calc(100vh - 80px - ${scrollDistanceWithinFooter}px)`;
+        }
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          console.log("footer is intersecting");
+          console.log(footer);
+
+          document.addEventListener("scroll", resizeMenu);
+          console.log(menu);
+        } else {
+          console.log("footer is not intersecting");
+          menu.style.removeProperty("height");
+          document.removeEventListener("scroll", resizeMenu);
+        }
+      },
+      { threshold: 0, rootMargin: "0px" }
+    );
+
+    if (footer) {
+      console.log("Observing footer");
+      observer.observe(footer);
+    }
+
+    return () => {
+      scrollTo(0, 0);
+      if (footer) {
+        observer.unobserve(footer);
+      }
+    };
   }, []);
 
   const items = [
@@ -55,7 +104,7 @@ export default function SongLayout({ children }) {
 
   return (
     <>
-      <div className="relative lg:flex  sm:min-h-[calc(100vh-196px-104px)] min-h-[calc(100vh-228px-104px)]">
+      <div className="relative lg:flex sm:min-h-[calc(100vh-196px-104px)] min-h-[calc(100vh-228px-104px)]">
         <div
           id="menu"
           className="lg:sticky flex-shrink-0 fixed lg:top-[72px] top-[56px] left-0 lg:w-72 w-full lg:h-[calc(100vh-80px)] lg:mx-2 lg:mb-2 lg:rounded-lg lg:bg-card bg-background z-10"
@@ -63,7 +112,7 @@ export default function SongLayout({ children }) {
           <div className={clsx("h-full justify-between p-1")}>
             <div className="flex flex-col justify-between h-full">
               {/* Sidebar on large screens */}
-              <div className="hidden lg:block">
+              {/* <div className="hidden lg:block">
                 {activeItem === "Search" && <Search />}
                 {activeItem === "Recently Played" && (
                   <SongList songs="recent" />
@@ -74,7 +123,7 @@ export default function SongLayout({ children }) {
                 {activeItem === "Top Songs (global)" && (
                   <SongList songs="top-global" />
                 )}
-              </div>
+              </div> */}
               <div className="hidden lg:block">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
