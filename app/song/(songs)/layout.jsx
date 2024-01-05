@@ -40,10 +40,6 @@ export default function SongLayout({ children }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { data: session, update } = useSession();
 
-  const scrollY = useMotionValue(0);
-
-  const scrollHeight = useTransform(scrollY, [196, 0], [697, 697 - 196]);
-
   console.log("session", session);
 
   useEffect(() => {
@@ -64,13 +60,14 @@ export default function SongLayout({ children }) {
         const scrollDistanceFromBottom =
           document.body.scrollHeight - window.innerHeight - window.scrollY;
 
-        scrollY.set(scrollDistanceFromBottom);
-
         console.log(scrollDistanceFromBottom);
         console.log(menu.style);
         if (window.innerWidth >= 1024) {
-          console.log(menu.style.height);
-          menu.style.height = scrollY;
+          const calculatedMenuHeight =
+            window.innerHeight - 80 - scrollDistanceWithinFooter;
+          console.log("menu.style.height:", menu.style.height);
+          menu.style.height = calculatedMenuHeight + "px";
+          console.log("menu.style.height:", menu.style.height);
         }
       }
     };
@@ -118,9 +115,6 @@ export default function SongLayout({ children }) {
         <motion.div
           id="menu"
           className="lg:sticky flex-shrink-0 fixed lg:top-[72px] top-[56px] left-0 lg:w-72 w-full lg:h-[calc(100vh-80px)] lg:mx-2 lg:mb-2 lg:rounded-lg lg:bg-card bg-background z-10"
-          style={{
-            height: scrollHeight
-          }}
         >
           <div className={clsx("h-full justify-between p-1")}>
             <div className="flex flex-col justify-between h-full">
