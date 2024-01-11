@@ -10,7 +10,7 @@ const Page = () => {
     <>
       <div className="flex flex-col items-center justify-center gap-2 text-base text-center align-bottom md:gap-5 xl:px-0">
         <div
-          className="flex flex-col items-center justify-center w-full overflow-hidden text-base text-center align-bottom md:gap-5 md:bg-fixed"
+          className="relative flex flex-col items-center justify-between w-full text-base text-center align-bottom md:gap-5 md:bg-fixed md:min-h-[650px] min-h-[450px]"
           style={{
             backgroundImage: "url(/images/banner.jpg)",
             backgroundSize: "cover",
@@ -22,9 +22,15 @@ const Page = () => {
             <source src="videos/this-song.mp4" type="video/mp4" /> */}
           {/* <img src="images/this-song-large.png" alt="This Song" /> */}
           {/* <img src="images/this-song-logo.png" alt="This Song" /> */}
-          <img src="images/this-song-logo-white.png" alt="This Song" />
+          <div className="relative flex-grow">
+            <img
+              src="images/this-song-logo.png"
+              alt="This Song"
+              className="md:sticky top-0 left-0 mt-[120px] md:mt-[180px] z-0"
+            />
+          </div>
           {/* </video> */}
-          <div className="mt-[-100px] flex flex-col gap-5 items-center justify-center">
+          <div className="flex flex-col items-center justify-center gap-5 md:mb-20 mb-14 pb-4 -mt-[25px] md:-mt-[75px] z-10">
             <h1
               className={clsx(
                 rajdhani.className,
@@ -44,7 +50,7 @@ const Page = () => {
           </div>
           <img
             src="images/border-bottom.png"
-            className="w-full md:min-w-[1400px] h-[70px]"
+            className="absolute bottom-0 w-full md:min-w-[1400px] h-[70px]"
             // className="w-full h-[70px]"
           />
         </div>
