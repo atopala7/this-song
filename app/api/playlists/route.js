@@ -3,6 +3,8 @@ import { playlistIDs } from "@/lib/data";
 import { getClientToken } from "@/lib/clientToken";
 
 export async function GET() {
+  return NextResponse.json("");
+
   const playlistsList = [];
 
   const tokenResponse = await getClientToken();
