@@ -237,8 +237,8 @@ const ArtistPage = ({ params }) => {
                     <section className="flex flex-col items-center justify-center basis-1/3">
                       <h1 className="text-3xl">Albums</h1>
                       <ArtistTopAlbums artistID={artistID} limit={5} />
-                      <h1 className="text-3xl">Related Artists</h1>
-                      <RelatedArtists artistID={artistID} />
+                      {/* <h1 className="text-3xl">Related Artists</h1>
+                      <RelatedArtists artistID={artistID} /> */}
                     </section>
                     <section className="flex flex-col items-center basis-2/3">
                       <h1 className="text-3xl">Top Songs</h1>

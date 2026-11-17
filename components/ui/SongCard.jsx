@@ -38,9 +38,9 @@ const SongCard = ({
   };
 
   useEffect(() => {
-    console.log("previewURL", previewURL);
+    // console.log("previewURL", previewURL);
     const getSummary = async () => {
-      console.log("Getting summary for", name);
+      //   console.log("Getting summary for", name);
       const parameters = new URLSearchParams([
         ["trackName", name],
         ["artistName", artistName]

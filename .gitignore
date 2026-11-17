@@ -40,3 +40,5 @@ compare.txt
 privacy_policy.txt
 *~
 *.bak*
+
+.vscode

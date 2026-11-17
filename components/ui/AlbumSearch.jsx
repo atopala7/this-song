@@ -35,7 +35,7 @@ const AlbumSearch = () => {
     setData(null);
     setStatus(null);
 
-    if (term) {
+    if (term?.trim() != "") {
       console.log(`Searching for ${term}...`);
 
       const fetchData = async () => {

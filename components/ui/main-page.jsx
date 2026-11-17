@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import TopSongsAsync from "../TopSongsAsync";
 import Playlist from "../Playlist";
 import MainSearch from "../main-search";
 import clsx from "clsx";
@@ -10,6 +11,7 @@ import { catchErrors } from "@/lib/utils";
 import { getClientAccessToken, searchTracks } from "@/lib/spotify";
 import { usePathname } from "next/navigation";
 import SongItemMain from "./song-item-main";
+import TopSongs from "../TopSongs";
 
 const MainPage = () => {
   const [searching, setSearching] = useState(false);
@@ -23,7 +25,7 @@ const MainPage = () => {
     setData(null);
     setStatus(null);
 
-    if (term) {
+    if (term?.trim() != "") {
       // console.log(`Searching for ${term}...`);
 
       const fetchData = async () => {
@@ -149,7 +151,7 @@ const MainPage = () => {
           {/* <Suspense fallback={<TopSongsSnippetsSkeleton />}>
           <TopSongsSnippets limit="24" offset="0" />
         </Suspense> */}
-          <Playlist playlist="37i9dQZF1DXcBWIGoYBM5M" limit={12} />
+          <TopSongs limit={12} />
         </div>
       </div>
     </>

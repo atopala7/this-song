@@ -3,7 +3,7 @@ import { SongContext } from "@/context/ContextProvider";
 import { getLyrics } from "@/lib/lyrics";
 import { catchErrors } from "@/lib/utils";
 import Image from "next/image";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { Bars, ThreeCircles } from "react-loader-spinner";
 import {
@@ -39,6 +39,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import emailjs from "@emailjs/browser";
 import { TypeAnimation } from "react-type-animation";
+import ReactMarkdown from "react-markdown";
 
 import { BACKEND_URL } from "@/lib/backendURL";
 
@@ -277,10 +278,13 @@ const Lyrics = ({ songID, songName, artistName, albumName }) => {
   const [GPTInterpretation, setGPTInterpretation] = useState(null);
   const [GPT3Interpretation, setGPT3Interpretation] = useState(null);
   const [scrolled, setScrolled] = useState(false);
+  const [finished, setFinished] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [sendingError, setSendingError] = useState(false);
   const [messageSent, setMessageSent] = useState(false);
+
+  const abortControllerRef = useRef(null);
 
   const musixmatchLogo = "/images/musixmatch_logo.svg";
 
@@ -348,6 +352,12 @@ const Lyrics = ({ songID, songName, artistName, albumName }) => {
   useEffect(() => {
     const fetchGPTResponse = async () => {
       if (!lyrics || lyrics.body == "No lyrics found") return;
+
+      abortControllerRef.current?.abort();
+
+      const abortController = new AbortController();
+      abortControllerRef.current = abortController;
+
       console.log(`Asking GPT about ${songName} by ${artistName}...`);
 
       const parameters = new URLSearchParams([
@@ -355,7 +365,7 @@ const Lyrics = ({ songID, songName, artistName, albumName }) => {
         ["artistName", artistName]
       ]);
 
-      // See if we can get a response from GPT-4
+      // See if we can get a response from GPT
       try {
         const gpt4Response = await fetch(
           `${GPT_INTERPRETATION_ENDPOINT}?${parameters.toString()}`,
@@ -367,11 +377,11 @@ const Lyrics = ({ songID, songName, artistName, albumName }) => {
           }
         );
 
-        console.log("GPT-4 fetch response: ", gpt4Response);
+        console.log("GPT fetch response: ", gpt4Response);
         if (gpt4Response.ok) {
           const interpretation = await gpt4Response.text();
           if (interpretation) {
-            console.log("GPT-4 interpretation response: ", interpretation);
+            console.log("GPT interpretation response: ", interpretation);
             // console.log("Interpretation: ", interpretation);
             setGPTInterpretation(interpretation);
             return;
@@ -385,37 +395,60 @@ const Lyrics = ({ songID, songName, artistName, albumName }) => {
         return;
       }
 
-      // If we can't get a response from GPT-4, ask GPT-3.5 and stream the response
-      const response = await fetch(GPT_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          trackName: songName,
-          artistName: artistName,
-          lyrics: lyrics.body.replace(/\n/g, " ")
-        })
-      });
+      try {
+        // If we can't get a response from GPT-4, ask GPT-3.5 and stream the response
+        const response = await fetch(GPT_ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            trackName: songName,
+            artistName: artistName,
+            lyrics: lyrics.body.replace(/\n/g, " ")
+          }),
+          signal: abortController.signal
+        });
 
-      // Create a ReadableStream to read the response body
-      const reader = response.body
-        .pipeThrough(new TextDecoderStream())
-        .getReader();
+        // Create a ReadableStream to read the response body
+        const reader = response.body
+          .pipeThrough(new TextDecoderStream())
+          .getReader();
 
-      // Read each chunk of the response body and append it to the GPTInterpretation state variable
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) {
-          break;
+        // Read each chunk of the response body and append it to the GPTInterpretation state variable
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done || abortController.signal.aborted) {
+            break;
+          }
+          // console.log("Received: ", value);
+          setGPT3Interpretation((prev) => (prev ? prev : "") + value);
         }
-        // console.log("Received: ", value);
-        setGPT3Interpretation((prev) => (prev ? prev : "") + value);
+      } catch (error) {
+        if (error.name === "AbortError" || abortController.signal.aborted) {
+          console.log("Fetch aborted");
+          return;
+        } else {
+          console.log(
+            "Error fetching GPT interpretation from database: ",
+            error
+          );
+        }
+      } finally {
+        if (abortControllerRef.current === abortController) {
+          abortControllerRef.current = null;
+        }
       }
     };
 
     fetchGPTResponse();
   }, [lyrics]);
+
+  useEffect(() => {
+    return () => {
+      abortControllerRef.current?.abort();
+    };
+  }, []);
 
   const formatLyrics = (lyricsData) => {
     // console.log("Lyrics: " + lyricsData.lyrics_body);
@@ -465,15 +498,19 @@ const Lyrics = ({ songID, songName, artistName, albumName }) => {
               </h2> */}
               <div className="items-center text-left">
                 {GPTInterpretation ? (
-                  <TypeAnimation
-                    splitter={(str) => str.split(/(?= )/)}
-                    sequence={[GPTInterpretation]}
-                    speed={{ type: "keyStrokeDelayInMs", value: 10 }}
-                    repeat={0}
-                    cursor={false}
-                  />
+                  finished ? (
+                    <ReactMarkdown>{GPTInterpretation}</ReactMarkdown>
+                  ) : (
+                    <TypeAnimation
+                      splitter={(str) => str.split(/(?= )/)}
+                      sequence={[GPTInterpretation, () => setFinished(true)]}
+                      speed={{ type: "keyStrokeDelayInMs", value: 10 }}
+                      repeat={0}
+                      cursor={false}
+                    />
+                  )
                 ) : GPT3Interpretation ? (
-                  GPT3Interpretation
+                  <ReactMarkdown>{GPT3Interpretation}</ReactMarkdown>
                 ) : (
                   lyrics &&
                   lyrics.body != "No lyrics found" && (

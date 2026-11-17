@@ -13,6 +13,59 @@ const playlistIDs = [
   "37i9dQZF1DX8C9xQcOrE6T" // Disney Hits
 ];
 
+const songIDs = [
+  "3h5T5JypYU7huFiVYhv1dr",
+  "7MOO89Qv9AV7VZkt5mcqA8",
+  "2sFepQNyl1WjpROruP8bJ0",
+  "70cHKK8bHAfJrOGVnfRG9J",
+  "55pBIZO1cqoldeqpp5WR7H",
+  "6U9VpmP3dEinuezxCJ2Zg9",
+  "1o9mAOmNm3wT2NdyGV1Ard",
+  "2FRnf9qhLbvw8fu4IBXx78",
+  "0bYg9bo50gSsH3LtXe2SQn",
+  "6QFCMUUq1T2Vf5sFUXcuQ7",
+  "0eAuGrXyGFYwur9ARUe7LJ",
+  "2XCT6boK7AFba6av4NOIj7",
+  "7qjZnBKE73H4Oxkopwulqe",
+  "6VDw2mGBIa4csypjOhS6JT",
+  "1mKXFLRA179hdOWQBwUk9e",
+  "2009X8GyWTqyxIdzAEYW6N",
+  "7so0lgd0zP2Sbgs2d7a1SZ",
+  "0mYXRQpTGjaLJt1l9MY4ps",
+  "2QjOHCTQ1Jl3zawyYOpxh6",
+  "4qW3BbQAwZsrnu8a3ZRdyT",
+  "49j6SvuvWfbEKZKzsHCdLJ",
+  "4DPdJvSMB6hmrjgC5eC85d",
+  "7scFxt9VhL4FJwuPSfRlfN",
+  "4WFgvKVfEhb3IUAFGrutTR",
+  "7ujApz6iFP3PmKIDGcaGbe",
+  "3qhlB30KknSejmIvZZLjOD",
+  "68lbSrXDORS51pmyjZv712",
+  "7bxaFZ1O3cHkgLKMsdC3xR",
+  "003vvx7Niy0yvhvHt4a68B",
+  "7yNf9YjeO5JXUE3JEBgnYc",
+  "7J1uxwnxfQLu4APicE5Rnj",
+  "2RkZ5LkEzeHGRsmDqKwmaJ",
+  "4RuRAwMmuBxw4QsKeFVhxh",
+  "5XeFesFbtLpXzIVDNQP22n",
+  "0kosUz0jePvjiz4ctmR6wL",
+  "3QGsuHI8jO1Rx4JWLUh9jd",
+  "21IYMdzTrzSe191Cy5eMap",
+  "1JSTJqkT5qHq8MDJnJbRE1",
+  "7CyPwkp0oE8Ro9Dd5CUDjW",
+  "70LcF31zb1H0PyJoS1Sx1r",
+  "0tW2gwaRzFQQrgr2UCO56G",
+  "7uoFMmxln0GPXQ0AcCBXRq",
+  "6dOtVTDdiauQNBQEDOtlAB",
+  "0lizgQ7Qw35od7CYaoMBZb",
+  "7ygpwy2qP3NbrxVkHvUhXY",
+  "0QPdjsMOUhwouq1NS3HwfQ",
+  "3sK8wGT43QFpWrvNQsrQya",
+  "3AJwUDP919kvQ9QcozQPxg",
+  "5Ohxk2dO5COHF1krpoPigN",
+  "7MXVkk9YMctZqd1Srtv4MB"
+];
+
 const initialSongs = [
   '{"id":"40riOy7x9W7GXjyGp4pjAv","name":"Hotel California - 2013 Remaster","artist":"Eagles","album":"Hotel California (2013 Remaster)","popularity":86,"image":"https://i.scdn.co/image/ab67616d000048514637341b9f507521afa9a778","url":"https://open.spotify.com/track/40riOy7x9W7GXjyGp4pjAv","summary":"A critique of the intoxicating allure and subsequent disillusionment of fame, materialism, and hedonistic lifestyle often associated with Hollywood and California in the 70s."}',
   '{"id":"0RO9W1xJoUEpq5MEelddFb","name":"Stairway to Heaven - Remaster","artist":"Led Zeppelin","album":"Led Zeppelin IV (Remaster)","popularity":68,"image":"https://i.scdn.co/image/ab67616d000048514509204d0860cc0cc67e83dc","url":"https://open.spotify.com/track/0RO9W1xJoUEpq5MEelddFb","summary":"An intricate lyrical journey depicting the pursuit of spiritual enlightenment, shunning materialistic desires, underscoring personal growth, and the wisdom in discerning truth in a world laden with dual meanings."}',
@@ -40,4 +93,4 @@ const initialSongs = [
   `{"id":"2LawezPeJhN4AWuSB0GtAU","name":"Have You Ever Seen The Rain","artist":"Creedence Clearwater Revival","album":"Pendulum (Expanded Edition)","popularity":89,"image":"https://i.scdn.co/image/ab67616d0000485151f311c2fb06ad2789e3ff91","url":"https://open.spotify.com/track/2LawezPeJhN4AWuSB0GtAU","summary":"A philosophical rumination on life's inevitable cycles of joy and sorrow, captured through the paradoxical image of a sunshower, which also potentially reflects the band members' personal experiences during a period of turmoil."}`
 ];
 
-export { playlistIDs, initialSongs };
+export { playlistIDs, songIDs, initialSongs };

@@ -65,7 +65,7 @@ const Footer = () => {
             owners.
           </p>
           <p className="text-sm text-muted">
-            &copy; 2024. This Song. All rights reserved.
+            &copy; {new Date().getFullYear()} This Song. All rights reserved.
           </p>
         </div>
       </div>

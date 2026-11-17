@@ -2,6 +2,7 @@ import React from "react";
 import { rajdhani } from "@/components/ui/fonts";
 import clsx from "clsx";
 import Playlist from "@/components/Playlist";
+import TopSongs from "@/components/TopSongs";
 
 const Song = () => {
   const trendingPlaylist = "37i9dQZEVXbMDoHDwVN2tF";
@@ -24,7 +25,8 @@ const Song = () => {
       >
         Trending Songs
       </h2>
-      <Playlist playlist={trendingPlaylist} limit={15} />
+      {/* <Playlist playlist={trendingPlaylist} limit={15} /> */}
+      <TopSongs limit={12} />
     </section>
   );
 };

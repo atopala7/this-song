@@ -78,7 +78,7 @@ export default function SongLayout({ children }) {
                     <SongList songs="top-global" />
                   )}
                 </div>
-                <div className="hidden lg:block">
+                {/* <div className="hidden lg:block">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button
@@ -109,7 +109,7 @@ export default function SongLayout({ children }) {
                       ))}
                     </DropdownMenuContent>
                   </DropdownMenu>
-                </div>
+                </div> */}
                 {/* Dropdown menu on small screens */}
                 <div className={clsx("flex lg:hidden", rajdhani.className)}>
                   <Dialog
@@ -136,7 +136,7 @@ export default function SongLayout({ children }) {
                       <Search onClick={() => setDialogOpen((prev) => !prev)} />
                     </DialogContent>
                   </Dialog>
-                  <Dialog
+                  {/* <Dialog
                     open={dialogOpen === "recent"}
                     onOpenChange={() =>
                       setDialogOpen((prev) =>
@@ -162,121 +162,7 @@ export default function SongLayout({ children }) {
                         onClick={() => setDialogOpen((prev) => !prev)}
                       />
                     </DialogContent>
-                  </Dialog>
-
-                  {!session && (
-                    <Dialog
-                      open={dialogOpen === "top-global"}
-                      onOpenChange={() =>
-                        setDialogOpen((prev) =>
-                          prev === "top-global" ? false : "top-global"
-                        )
-                      }
-                    >
-                      <DialogTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className="w-full text-base font-semibold"
-                        >
-                          Top Songs
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="max-h-[80vh]">
-                        <DialogHeader>
-                          <DialogTitle>Most Popular Songs</DialogTitle>
-                          <DialogDescription></DialogDescription>
-                        </DialogHeader>
-                        <SongList
-                          songs="top-global"
-                          onClick={() => setDialogOpen((prev) => !prev)}
-                        />
-                      </DialogContent>
-                    </Dialog>
-                  )}
-                  {session && (
-                    <DropdownMenu
-                      open={dropdownOpen}
-                      onOpenChange={() => {
-                        console.log("dropdownOpen", dropdownOpen);
-                        setDropdownOpen((prev) => !prev);
-                      }}
-                    >
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className="w-full text-base font-semibold"
-                        >
-                          Top Songs
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent>
-                        <Dialog
-                          open={dialogOpen === "top-user"}
-                          onOpenChange={() => {
-                            setDialogOpen((prev) =>
-                              prev === "top-user" ? false : "top-user"
-                            );
-                          }}
-                        >
-                          <DialogTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              className={clsx("w-full", rajdhani.className)}
-                            >
-                              {session && session?.user?.name}
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent className="max-h-[80vh]">
-                            <DialogHeader>
-                              <DialogTitle>
-                                {session &&
-                                  session?.user?.name + "'s Top Songs"}
-                                {!session && "Log in to see your top songs"}
-                              </DialogTitle>
-                              <DialogDescription></DialogDescription>
-                            </DialogHeader>
-                            <SongList
-                              songs="top-user"
-                              onClick={() => {
-                                setDialogOpen((prev) => !prev);
-                                setDropdownOpen(false);
-                              }}
-                            />
-                          </DialogContent>
-                        </Dialog>
-                        <Dialog
-                          open={dialogOpen === "top-global"}
-                          onOpenChange={() =>
-                            setDialogOpen((prev) =>
-                              prev === "top-global" ? false : "top-global"
-                            )
-                          }
-                        >
-                          <DialogTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              className={clsx("w-full", rajdhani.className)}
-                            >
-                              Global
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent className="max-h-[80vh]">
-                            <DialogHeader>
-                              <DialogTitle>Most Popular Songs</DialogTitle>
-                              <DialogDescription></DialogDescription>
-                            </DialogHeader>
-                            <SongList
-                              songs="top-global"
-                              onClick={() => {
-                                setDialogOpen((prev) => !prev);
-                                setDropdownOpen(false);
-                              }}
-                            />
-                          </DialogContent>
-                        </Dialog>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  )}
+                  </Dialog> */}
                 </div>
               </div>
               {/* <SidebarTabs /> */}
