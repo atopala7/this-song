@@ -142,7 +142,7 @@ const MainPage = () => {
             "px-2 text-xl font-bold text-center"
           )}
         >
-          Trending Songs
+          Classic Rock Songs
         </h2>
         <p className={clsx(rajdhani.className, "text-base mt-1")}>
           (Select a song to learn more)

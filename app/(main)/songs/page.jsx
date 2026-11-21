@@ -23,7 +23,7 @@ const Song = () => {
           "text-2xl font-bold text-center pt-9"
         )}
       >
-        Trending Songs
+        Classic Rock Songs
       </h2>
       {/* <Playlist playlist={trendingPlaylist} limit={15} /> */}
       <TopSongs limit={12} />
