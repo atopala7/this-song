@@ -14,56 +14,115 @@ const playlistIDs = [
 ];
 
 const songIDs = [
-  "0MKqeOVdZcUFGJvWpGCKbG",
-  "606rdbOqKsPx2GFJEEcLZd",
-  "7IGohwIFAA8NimsLK2YM56",
-  "3vFygC0p8yq60QwjD4sV4q",
-  "5CQ30WqJwcep0pYcV4AMNc",
-  "4u7EnebtmKWzUH433cf5Qv",
-  "40riOy7x9W7GXjyGp4pjAv",
-  "5EWPGh7jbTNO2wakv8LjUI",
-  "0GxXUdLEOARGAuUCGPEQw8",
-  "5HNCy40Ni5BZJFw1TKzRsC",
-  "6mFkJmJqdDVQ1REhVfGgd1",
-  "0FeCO85RKW8fDRytwXof2x",
-  "0ofHAoxe9vBkTCp2UQIavz",
-  "77h5APrMzJhARbwwKdWCNY",
-  "2WuTnB64b2F6Fa2XYnCRH3",
-  "1lhmgubpHo0AGAX7BCiO2a",
-  "5sieEeOuqDXjgd0BclmXKH",
-  "3AYBKkoSM1R0w3qJCtXRsP",
-  "3w2GGz0HjIu9OcWXINRFJR",
-  "08mG3Y1vljYA6bvDt4Wqkj",
-  "7o2CTH4ctstm8TNelqjb51",
-  "5NIPsWpDjJTFBoPxCUUeXp",
-  "1uTbFcWsB8Vptdf7U9qCHT",
-  "3UMVWzrpFuV8LbgsqzKveb",
-  "5vdp5UmvTsnMEMESIF2Ym7",
-  "7pJEjPeAh3CiJRcBc4oaZH",
-  "1JSTJqkT5qHq8MDJnJbRE1",
-  "06dhbuIVE5B6aX1b9y2I2p",
-  "4nFNJmjfgBF7jwv2oBC45b",
-  "02xhLoVqpGmOqvolgrwM8w",
-  "7Je5fiVdnpGSI0bXHmapPM",
-  "5ghIJDpPoe3CfHMGu71E6T",
-  "4P5KoWXOxwuobLmHXLMobV",
-  "1L94M3KIu7QluZe63g64rv",
-  "2EoOZnxNgtmZaD8uUmz2nD",
-  "6L89mwZXSOwYl76YXfX13s",
-  "3d9DChrdc6BOeFsbrZ3Is0",
-  "7ygpwy2qP3NbrxVkHvUhXY",
-  "5sICkBXVmaCQk5aISGR3x1",
-  "70LcF31zb1H0PyJoS1Sx1r",
-  "5UWwZ5lm5PKu6eKsHAGxOk",
-  "1FTSo4v6BOZH9QxKc3MbVM",
-  "3dPQuX8Gs42Y7b454ybpMR",
-  "003vvx7Niy0yvhvHt4a68B",
-  "60a0Rd6pjrkxjPbaKzXjfq",
-  "1hwJKpe0BPUsq6UUrwBWTw",
-  "7x8dCjCr0x6x2lXKujYD34",
-  "0BCPKOYdS2jbQ8iyB56Zns",
-  "0ntQJM78wzOLVeCUAW7Y45",
-  "2nLtzopw4rPReszdYBJU6h"
+  // 1960s
+  "0MKqeOVdZcUFGJvWpGCKbG", // The Beatles — Come Together
+  "606rdbOqKsPx2GFJEEcLZd", // The Rolling Stones — Paint It, Black
+  "7IGohwIFAA8NimsLK2YM56", // Jimi Hendrix — All Along the Watchtower
+  "3vFygC0p8yq60QwjD4sV4q", // Cream — Sunshine of Your Love
+
+  // 1970s
+  "5CQ30WqJwcep0pYcV4AMNc", // Led Zeppelin — Stairway to Heaven
+  "4u7EnebtmKWzUH433cf5Qv", // Queen — Bohemian Rhapsody
+  "40riOy7x9W7GXjyGp4pjAv", // Eagles — Hotel California
+  "5EWPGh7jbTNO2wakv8LjUI", // Lynyrd Skynyrd — Free Bird
+  "0GxXUdLEOARGAuUCGPEQw8", // Lynyrd Skynyrd — Sweet Home Alabama
+  "5HNCy40Ni5BZJFw1TKzRsC", // Pink Floyd — Comfortably Numb
+  "6mFkJmJqdDVQ1REhVfGgd1", // Pink Floyd — Wish You Were Here
+  "0FeCO85RKW8fDRytwXof2x", // Fleetwood Mac — Go Your Own Way
+  "0ofHAoxe9vBkTCp2UQIavz", // Fleetwood Mac — Dreams
+  "77h5APrMzJhARbwwKdWCNY", // AC/DC — Highway to Hell
+  "2WuTnB64b2F6Fa2XYnCRH3", // Boston — More Than a Feeling
+  "1lhmgubpHo0AGAX7BCiO2a", // Kansas — Carry On Wayward Son
+  "5sieEeOuqDXjgd0BclmXKH", // Deep Purple — Smoke on the Water
+  "3AYBKkoSM1R0w3qJCtXRsP", // Aerosmith — Dream On
+  "3w2GGz0HjIu9OcWXINRFJR", // Led Zeppelin — Rock and Roll
+  "7FQSAiopqWOgCGqUNbDvh3", // Black Sabbath — Paranoid
+  "755bvJDSA3LNcNuFgBT9LK", // Black Sabbath — Iron Man
+  "5VKU0Lh9deNkVq046FVIir", // The Who — Baba O'Riley
+  "5k5smMM3tbs9rbSdy2d95F", // The Who — Won't Get Fooled Again
+  "557FXhTs1bTc65KKMUOHVu", // David Bowie — Heroes
+  "2jqN63mKPBoScL2veSwn6x", // Elton John — Rocket Man
+  "0BPLZQI3hLnTG9sfuaFjJR", // Heart — Barracuda
+  "4tYpXPNvHZORYI2iNaydLA", // Blue Öyster Cult — (Don't Fear) The Reaper
+  "6BY21kxrOjAdDm4k0Wh1aj", // The Doors — Riders on the Storm
+  "1MlnK8r2dX7k1Cd6PDTyqD", // The Clash — London Calling
+  "1HOMkjp0nHMaTnfAkslCQj", // The Knack — My Sharona
+  "5a6KyT9KATJU06LwRMg9Bz", // Santana — Black Magic Woman
+  "6pKDYgGvwfalcsx1tbYfn7", // Dire Straits — Sultans of Swing
+  "6hFtEmLI2jtXd5jqd3wwJd", // Elton John — Tiny Dancer
+  "70C4NyhjD5OZUMzvWZ3njJ", // Billy Joel — Piano Man
+
+  // 1980s
+  "08mG3Y1vljYA6bvDt4Wqkj", // AC/DC — Back in Black
+  "7o2CTH4ctstm8TNelqjb51", // Guns N' Roses — Sweet Child O' Mine
+  "5NIPsWpDjJTFBoPxCUUeXp", // Guns N' Roses — Welcome to the Jungle
+  "1uTbFcWsB8Vptdf7U9qCHT", // Bon Jovi — Livin' on a Prayer
+  "3UMVWzrpFuV8LbgsqzKveb", // Journey — Don't Stop Believin'
+  "5vdp5UmvTsnMEMESIF2Ym7", // Queen — Another One Bites the Dust
+  "7pJEjPeAh3CiJRcBc4oaZH", // U2 — With or Without You
+  "1JSTJqkT5qHq8MDJnJbRE1", // The Police — Every Breath You Take
+  "06dhbuIVE5B6aX1b9y2I2p", // Van Halen — Jump
+  "4nFNJmjfgBF7jwv2oBC45b", // Dire Straits — Money for Nothing
+  "02xhLoVqpGmOqvolgrwM8w", // Metallica — One
+  "7Je5fiVdnpGSI0bXHmapPM", // Def Leppard — Pour Some Sugar on Me
+  "0PX5DeeFUEVhA5LEeomIlG", // Toto — Africa
+  "64F1ojnPPiJiFZtYQtHB7r", // Survivor — Eye of the Tiger
+  "0GONea6G2XdnHWjNZd6zt3", // Bryan Adams — Summer of '69
+  "76GlO5H5RT6g7y0gev86Nk", // The Cure — Just Like Heaven
+  "7707eDBpR4qtNFoQ6nQyeR", // R.E.M. — The One I Love
+  "7JKpvExRQ3pZ9PxngB0NkS", // Whitesnake — Here I Go Again
+  "46pu3x5HjvOxJBehVyvuh8", // Europe — The Final Countdown
+  "5eU8qMd0TpaLqTGDZJaLDs", // INXS — Need You Tonight
+  "7ACxUo21jtTHzy7ZEV56vU", // Ozzy Osbourne — Crazy Train
+  "0rRohrJjaHpVqEphvY2dsS", // Scorpions — Rock You Like a Hurricane
+  "29976iFaurObbrJdrEDg5X", // Twisted Sister — We're Not Gonna Take It
+  "0A4PZuepTcIQVvA5m7R0M1", // Simple Minds — Don't You (Forget About Me)
+
+  // 1990s
+  "5ghIJDpPoe3CfHMGu71E6T", // Nirvana — Smells Like Teen Spirit
+  "4P5KoWXOxwuobLmHXLMobV", // Nirvana — Come as You Are
+  "1L94M3KIu7QluZe63g64rv", // Pearl Jam — Alive
+  "2EoOZnxNgtmZaD8uUmz2nD", // Soundgarden — Black Hole Sun
+  "6L89mwZXSOwYl76YXfX13s", // Green Day — Basket Case
+  "3d9DChrdc6BOeFsbrZ3Is0", // Red Hot Chili Peppers — Under the Bridge
+  "7ygpwy2qP3NbrxVkHvUhXY", // Oasis — Wonderwall
+  "5sICkBXVmaCQk5aISGR3x1", // Metallica — Enter Sandman
+  "70LcF31zb1H0PyJoS1Sx1r", // Radiohead — Creep
+  "5UWwZ5lm5PKu6eKsHAGxOk", // Foo Fighters — Everlong
+  "1FTSo4v6BOZH9QxKc3MbVM", // Blur — Song 2
+  "50h65cyBVsI4fIUa57jOHK", // Alice in Chains — Man in the Box
+  "48UPSzbZjgc449aqz8bxox", // Red Hot Chili Peppers — Californication
+  "7EZC6E7UjZe63f1jRmkWxt", // The Cranberries — Zombie
+  "3h5zik31hTTat9jmpCZZNC", // The Smashing Pumpkins — 1979
+  "2vHnjoM1XuXWGu1yQbNLmO", // Oasis — Don't Look Back in Anger
+  "63OQupATfueTdZMWTxW03A", // Radiohead — Karma Police
+  "57iDDD9N9tTWe75x6qhStw", // The Verve — Bitter Sweet Symphony
+  "1Fmqdji2Fqvh4UUzPlyL2z", // Weezer — Buddy Holly
+  "2TAQ9YGehOKWDqDak5DuXc", // Stone Temple Pilots — Plush
+  "1FkoVC85Ds3mFoK0fVqEqP", // The Offspring — Self Esteem
+  "2m1hi0nfMR9vdGC8UcrnwU", // blink-182 — All the Small Things
+  "31AOj9sFz2gM0O3hMARRBx", // R.E.M. — Losing My Religion
+
+  // 2000s
+  "3dPQuX8Gs42Y7b454ybpMR", // The White Stripes — Seven Nation Army
+  "003vvx7Niy0yvhvHt4a68B", // The Killers — Mr. Brightside
+  "60a0Rd6pjrkxjPbaKzXjfq", // Linkin Park — In the End
+  "1hwJKpe0BPUsq6UUrwBWTw", // Green Day — Boulevard of Broken Dreams
+  "7x8dCjCr0x6x2lXKujYD34", // Foo Fighters — The Pretender
+  "0BCPKOYdS2jbQ8iyB56Zns", // Coldplay — Clocks
+  "0ntQJM78wzOLVeCUAW7Y45", // Kings of Leon — Sex on Fire
+  "2nLtzopw4rPReszdYBJU6h", // Linkin Park — Numb
+  "4VqPOruhp5EdPBeR92t6lQ", // Muse — Uprising
+  "7kzKAuUzOITUauHAhoMoxA", // The Strokes — Last Nite
+  "57Xjny5yNzAcsxnusKmAfA", // The Strokes — Reptilia
+  "6uV5q0yxaOujbxkwUCUEEf", // Arctic Monkeys — I Bet You Look Good on the Dancefloor
+  "20I8RduZC2PWMWTDCZuuAN", // Franz Ferdinand — Take Me Out
+  "0COqiPhxzoWICwFCS4eZcp", // Evanescence — Bring Me to Life
+  "2DlHlPMa4M17kufBvI2lEN", // System of a Down — Chop Suey!
+  "2xt2piJx6jlFkjS77YiqpL", // Audioslave — Like a Stone
+  "6GuiZdJ4sZ4Dy67mjQ1al6", // My Chemical Romance — Welcome to the Black Parade
+  "5VGlqQANWDKJFl0MBG3sg2", // Kings of Leon — Use Somebody
+  "6SpLc7EXZIPpy0sVko0aoU" // Paramore — Misery Business
 ];
 
 const initialSongs = [
